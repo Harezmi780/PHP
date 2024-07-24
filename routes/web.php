@@ -1,9 +1,16 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return ['Laravel' => app()->version()];
-});
+Route::get('/', [HomeController::class, index] -> name('homepage'); 
 
-require __DIR__.'/auth.php';
+Route::get('/yazilar', function () {
+    $title = 'Yazilar';
+    $posts = collect(
+        [
+            ['title' => 'Laravel Nedir?', 'description' => 'laravel bir frameworktur'],
+        ]
+    );
+    return view('posts.index', compact('title', 'posts'));
+})->name('blog.index');
